@@ -2,12 +2,24 @@ package com.epam.xml.model;
 
 import java.util.Date;
 
+import javax.xml.bind.annotation.XmlAccessType;
+import javax.xml.bind.annotation.XmlAccessorType;
+import javax.xml.bind.annotation.XmlAttribute;
+import javax.xml.bind.annotation.XmlElement;
+import javax.xml.bind.annotation.XmlRootElement;
+
+@XmlAccessorType(XmlAccessType.FIELD)
+@XmlRootElement(
+        name = "book")
 public class Book {
+    @XmlAttribute
     private String id;
     private String author;
     private String title;
     private Genre genre;
     private Double price;
+    @XmlElement(
+            name = "publish_date")
     private Date publishDate;
     private String description;
 
@@ -72,7 +84,7 @@ public class Book {
         StringBuilder builder = new StringBuilder();
         builder.append("\nBook: \n\tid=").append(id).append(", \n\tauthor=")
                 .append(author).append(", \n\ttitle=").append(title)
-                .append(", \n\tgenre=").append(genre.getTitle())
+                .append(", \n\tgenre=").append(genre)
                 .append(", \n\tprice=").append(price)
                 .append(", \n\tpublishDate=").append(publishDate)
                 .append(", \n\tdescription=").append(description);

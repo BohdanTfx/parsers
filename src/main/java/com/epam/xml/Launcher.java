@@ -12,18 +12,24 @@ public class Launcher {
 
         parser.processDocument(new File(filePath));
         System.out.println(
-                "============Custom StAX=============\n" + parser.getCatalog());
+                "============StAX=============\n" + parser.getCatalog());
 
         parser = ParserFactory.getParser("dom");
 
         parser.processDocument(new File(filePath));
         System.out.println(
-                "============Custom DOM=============\n" + parser.getCatalog());
+                "============DOM=============\n" + parser.getCatalog());
 
         parser = ParserFactory.getParser("sax");
 
         parser.processDocument(new File(filePath));
         System.out.println(
-                "============Custom SAX=============\n" + parser.getCatalog());
+                "============SAX=============\n" + parser.getCatalog());
+
+        parser = ParserFactory.getParser("jaxb");
+
+        parser.processDocument(new File(filePath));
+        System.out.println(
+                "============JAXB=============\n" + parser.getCatalog());
     }
 }

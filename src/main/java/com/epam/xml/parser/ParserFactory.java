@@ -13,6 +13,9 @@ public final class ParserFactory {
         case "stax":
             parser = new StAXParser();
             break;
+        case "jaxb":
+            parser = new JAXBParser();
+            break;
         default:
             break;
         }
