@@ -1,10 +1,10 @@
-package com.epam.xml.parsers.model;
+package com.epam.xml.model;
 
 import java.util.Date;
 
 public class Book {
     private String id;
-    private String name;
+    private String author;
     private String title;
     private Genre genre;
     private Double price;
@@ -17,14 +17,6 @@ public class Book {
 
     public void setId(String id) {
         this.id = id;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
     }
 
     public String getTitle() {
@@ -65,5 +57,25 @@ public class Book {
 
     public void setDescription(String description) {
         this.description = description;
+    }
+
+    public String getAuthor() {
+        return author;
+    }
+
+    public void setAuthor(String author) {
+        this.author = author;
+    }
+
+    @Override
+    public String toString() {
+        StringBuilder builder = new StringBuilder();
+        builder.append("\nBook: \n\tid=").append(id).append(", \n\tauthor=")
+                .append(author).append(", \n\ttitle=").append(title)
+                .append(", \n\tgenre=").append(genre.getTitle())
+                .append(", \n\tprice=").append(price)
+                .append(", \n\tpublishDate=").append(publishDate)
+                .append(", \n\tdescription=").append(description);
+        return builder.toString();
     }
 }
