@@ -1,7 +1,10 @@
 package com.epam.xml;
 
 import java.io.File;
+import java.util.List;
 
+import com.epam.xml.manager.XPathManager;
+import com.epam.xml.model.Book;
 import com.epam.xml.parser.Parser;
 import com.epam.xml.parser.ParserFactory;
 
@@ -10,26 +13,31 @@ public class Launcher {
         String filePath = "XML_TASK.xml";
         Parser parser = ParserFactory.getParser("stax");
 
-        parser.processDocument(new File(filePath));
+        File file = new File(filePath);
+        parser.processDocument(file);
         System.out.println(
                 "============StAX=============\n" + parser.getCatalog());
 
         parser = ParserFactory.getParser("dom");
 
-        parser.processDocument(new File(filePath));
+        parser.processDocument(file);
         System.out.println(
                 "============DOM=============\n" + parser.getCatalog());
 
         parser = ParserFactory.getParser("sax");
 
-        parser.processDocument(new File(filePath));
+        parser.processDocument(file);
         System.out.println(
                 "============SAX=============\n" + parser.getCatalog());
 
         parser = ParserFactory.getParser("jaxb");
 
-        parser.processDocument(new File(filePath));
+        parser.processDocument(file);
         System.out.println(
                 "============JAXB=============\n" + parser.getCatalog());
+
+        XPathManager xPathManager = new XPathManager();
+        List<Book> books = xPathManager.findBooksByLastName(file, "O'Brien");
+        System.out.println("=========XPath============\n" + books);
     }
 }

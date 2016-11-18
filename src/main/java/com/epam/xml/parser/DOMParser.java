@@ -23,7 +23,8 @@ import com.epam.xml.model.Catalog;
 import com.epam.xml.model.Genre;
 
 public class DOMParser implements Parser {
-    private SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+    private static final SimpleDateFormat DATE_FORMAT = new SimpleDateFormat(
+            "yyyy-MM-dd");
     private List<Book> booksList;
     private Catalog catalog = new Catalog();
 
@@ -38,7 +39,7 @@ public class DOMParser implements Parser {
         NodeList booksList = document.getElementsByTagName("book");
         this.booksList = new ArrayList<>();
         for (int i = 0; i < booksList.getLength(); i++) {
-            fillBook((Element) booksList.item(i));
+            this.booksList.add(fillBook((Element) booksList.item(i)));
         }
 
         setCatalogTitle(document);
@@ -51,10 +52,10 @@ public class DOMParser implements Parser {
         if (title.getParentNode().getNodeName().equals("catalog")) {
             catalog.setTitle(title.getTextContent());
         }
-        
+
     }
 
-    private void fillBook(Element element) {
+    public static Book fillBook(Element element) {
         Book book = new Book();
         book.setId(element.getAttribute("id"));
         NodeList nodeList = element.getChildNodes();
@@ -71,7 +72,7 @@ public class DOMParser implements Parser {
             case "publish_date":
                 try {
                     book.setPublishDate(
-                            dateFormat.parse(child.getTextContent()));
+                            DATE_FORMAT.parse(child.getTextContent()));
                 } catch (DOMException | ParseException e) {
                     e.printStackTrace();
                 }
@@ -90,8 +91,9 @@ public class DOMParser implements Parser {
             }
         }
 
-        booksList.add(book);
+        return book;
     }
+
     @Override
     public Catalog getCatalog() {
         return catalog;
