@@ -13,6 +13,7 @@ import javax.xml.xpath.XPathConstants;
 import javax.xml.xpath.XPathExpression;
 import javax.xml.xpath.XPathExpressionException;
 import javax.xml.xpath.XPathFactory;
+import javax.xml.xpath.XPathFactoryConfigurationException;
 
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
@@ -29,16 +30,21 @@ public class XPathManager {
             return parseBooks("/catalog/booksList/book[starts-with(author,\""
                     + lastName + "\")]", getDocument(file));
         } catch (XPathExpressionException | SAXException | IOException
-                | ParserConfigurationException e) {
+                | ParserConfigurationException
+                | XPathFactoryConfigurationException e) {
             throw new RuntimeException(e);
         }
     }
 
     private List<Book> parseBooks(String expression, Document document)
-            throws XPathExpressionException {
+            throws XPathExpressionException,
+            XPathFactoryConfigurationException {
         List<Book> books = new ArrayList<>();
 
-        XPathFactory xPathfactory = XPathFactory.newInstance();
+        XPathFactory xPathfactory = XPathFactory.newInstance(
+                XPathFactory.DEFAULT_OBJECT_MODEL_URI,
+                "net.sf.saxon.xpath.XPathFactoryImpl",
+                ClassLoader.getSystemClassLoader());
         XPath xpath = xPathfactory.newXPath();
         XPathExpression expr = xpath.compile(expression);
 
